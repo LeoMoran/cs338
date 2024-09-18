@@ -1,0 +1,3 @@
+Leo Moran
+I intend on using Kali to further my understanding on computer security within a safe and controlled environment that is the Kali Virtual Machine.
+Status, Kali is fully installed, along with the VMware.
