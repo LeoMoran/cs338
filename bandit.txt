@@ -1,0 +1,160 @@
+Level 0
+Using the given SSH on the bandit website on Level 0, and as seen on the assignment, 
+you would then need to use bandit0 as the username and password to log in. The 
+username and password was also on the website on Level 0.
+
+During this assignment, refer to the website webpages for the goals of each level and 
+for the commands needed.
+
+Password, bandit0
+
+The importance behind this level is the understanding of how to use ssh to reach a proper
+server and how to utilize the right portnumber to do so. 
+
+Level 0 -> 1
+In order to find the password, I used the the command "$ cat readme" to print out 
+the contents of the readme file.
+
+I located the file using the command "$ ls" which listed all files within the 
+directory I was in.
+
+Password, ZjLjTmM6FvvyRnrb2rfNWOZOTa6ip5If
+
+This level introduces the functionality of the cat command, which is to concatenate the 
+given file, or the standard input and print it out. This function allows you to then easily read files.
+
+Level 1 -> 2
+I changed the ssh to use bandit1 instead of bandit0 to progress to the next level,
+using the password I found at level 0.
+I gave cat another try but it did not read the file.
+I tried to ustilize the ascii value of - instead, but did not know how to.
+After clicking on the link for "dashed filename" I came across a stack overflow 
+post and found that to read a file named -, you would need specify the directory of it,
+which means to call is ./-, this allowed me to use command $ cat ./- to get the 
+password.
+
+Password, 263JGJPfgU6LtdEvgfWU1XP5yac29mFx
+Webpage, https://stackoverflow.com/questions/42187323/how-to-open-a-dashed-filename-using-terminal
+
+This level shows how to use the directory of specific files in order to access them in 
+ways that you typically cant when using the commands normally.
+
+Level 2 -> 3
+I tried cat while using _ for spaces, without the spaces, the current directory and the 
+use of _ in place of spaces, I tried square brakets, but none seem to work.
+I took a look over the uses of the ls command and came across ls -Q that encloses the 
+file name with quotation marks, I used the function to see if there were additional spaces
+being used that I was unaware of, but then I realized that I could use the quotation marks
+to surrpund the file names itself to make it one object and managed to get the password!!
+
+This level shows how the use of quotation marks allows you to specify what is one object, 
+or in this case, what is one file, allowing you to access files with spaces in their name.
+
+Password, MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx
+
+Level 3 -> 4
+Since the file was supposed to be hidden, I made use of "$ ls -a" to find the directory 
+inhere, used "$ cd inhere" to enter the directory, then used "$ ls -a" again to show 
+all of the files within the directory and found ...Hiding-From-You. Using the cat command
+I managed to get the password.
+
+Password, 2WmrDFRmJIq3IPxneAaMGhap0pFhF3NJ
+
+By using "$ ls -a" I am able to see all directories and files within my current directory,
+which involves files that have a period at the front of the name.
+
+Level 4 -> 5
+Using the file command, I was able to find the file type for each file within the inhere 
+directory and notice how only -file07 was in ASCII text while the other files only 
+returned data. Using this, I assumed -file07 has the password.
+I then used cat on -file07 and got the password.
+
+Password, 4oQYVPkxZOOEOO5pTW81FB8j8lxXGUQw
+Using the file command allowed me to quickly look through each file and find the one that 
+I can properly read, all without the special characters messing up my terminal.
+
+Level 5 -> 6
+Using the find command, while I did not know how to search for only files that are human readable, 
+I was able to search for files that fit the otherr descriptions of having 1033 bytes and 
+not being executable. I did this using the Global Option of -executable except with \! to return 
+the opposite truth value. Then I used the -size test to find a file that uses the exact 
+amount of bytes needed. Once I found the file, I then used cat to print the password.
+
+Password, HWasnPhtq9AVKe0dmk45nxy20cvUa6EG
+
+This taught me how to modify the given commands to search for more specific files using their
+attributes as searching points.
+
+Level 6 -> 7
+When I read the goal, I assumed it would be the same as the last level where I would need to 
+modify the find command, but even with my slightly modified search I came up with nothing.
+I was still working in the original directory until my roommate Ezra pointed out how there 
+was a parent directory that I could go that was higher up by doing "$cd ..".
+After changing directories to the parent twice, I then used the command that Jeff provided 
+on Slack, replacing the x for -size 33c and entering the user and group data to get the 
+file with the password.
+$ find -size 33c -user bandit7 -group bandit6 2>/dev/null
+I then used the cat command to get the password from the file.
+$ cat ./var/lib/dpkg/info/bandit7.password
+
+Password, morbNTDkSW6jIlUc0ymOdMaLnOlFVAaj
+
+I learned that the directory that I start in is only a part of what I have access to, and 
+that I can actually go further up in the hierarchy through the parent directories to gain 
+higger access.
+
+Level 7 -> 8
+I looked through the new commands, using man to read what they do. I learned how grep 
+searched for and returns patterns up to the newline character, so I used -F to signify 
+that I am looking for a string pattern, then entered millionth as the pattern I am 
+looking for, followed by the name of the file. The result was the matched string, 
+along with the password.
+
+Password, dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc
+
+This taught me how to use grep to search for patterns within very large data files 
+in a way that doesn't take forever to read through every sing line of text.
+
+Level 8 -> 9
+I made use of the sort command to organize the data, then used uniq -u to find the one 
+unique string, which will be the password.
+$ sort data.txt | uniq -u
+Password, 4CKMh1JI91bUIZZPXDqGanal4xvAg0JM
+This level taught me how to make use of pipes to better automate the use of commands.
+
+Level 9-10
+Using the strings command, I was able to quickly scan over the printed data and easily spot 
+the outlier that had the password. I was also just able to scan data normally to find the 
+same password but I didn't learn much from that.
+
+I JUST FIGURED OUT THAT BY USING THE COMMAND $ strings data.txt | grep "=" IT ALLOWS ME TO 
+ACTUALLY USE THE GREP FUNCTION WITHOUT IT PRINTING USELESS JUNK, PROVIDING ME THE WHOLE 
+MESSAGE AS WELL ASS THE PASSWORD!!!!!!
+
+Password, FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
+
+This level taught me how to use strings as another means of organizing imense data files, 
+and how piping that output into grep allowed me to make use of the grep function when the 
+pattern is an equal sign.
+
+Level 10 -> 11
+I made use of the base64 function with the -d flag to signify that I wanted to decode the file 
+from base64 and managed to get the password.
+
+Password, dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr
+
+This level taught me how to handle encrypted data in base64.
+
+11 -> 12
+After looking at the wikipedia link provided on the webpage, I learned how tr can be used to 
+help encrypt or decode when given a string to work with, I then utilized the character 
+mappings but when I ran the tr command with data.txt, I realized that it was encoding the 
+file name itself, so what I did was first I used the strings command on the data.txt file, 
+then through a pipeline I then used the tr command with the 'A-Za-z' 'N-ZA-Mn-za-m' string and 
+got the password.
+
+Password, 7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4
+
+I learned that I can use the command tr to also encrypt or decode, except rather than impacting 
+the data, I was impacting the characters themselves and am able to work with more of the 
+common day cyphers.
