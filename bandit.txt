@@ -1,3 +1,6 @@
+Leo Moran
+09/18/2024
+
 Level 0
 Using the given SSH on the bandit website on Level 0, and as seen on the assignment, 
 you would then need to use bandit0 as the username and password to log in. The 
