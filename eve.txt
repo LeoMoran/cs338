@@ -1,0 +1,76 @@
+09/27/2024
+
+Leo Moran
+
+Diffie Hellman
+1. Figure out the shared secret agreed upon by Alice and Bob. This 
+   will be an integer.
+2. Show your work. Exactly how did you figure out the shared secret?
+3. Show precisely where in your process you would have failed if the 
+   integers involved were much larger.
+
+Alice and Bob agree on g = 7 and p = 97.
+Alice sent Bob the number 53
+Bob sent Alice the number 82
+
+1. The shared secret would be the number 2.
+2. The shared secret can be calculated through this equation:
+(B**a) % p = (A**b) % p
+   Since I have B (the number sent from Bob), A (the number sent by Alice),
+   and p which the both of them decided at the start, I can plug in those 
+   values.
+(82**a) % 97 = (53**b) % 97
+   Then all I needed to do was run the equation with different values of a 
+   and b until both equations equaled to each other.
+a & b | (82**a) % 97 | (53**b) % 97
+------|--------------|--------------
+  1   |      82      |      53
+  2   |      31      |      93
+  3   |      20      |      79
+  4   |      88      |      16
+  5   |      38      |      72
+  6   |      12      |      33
+  7   |      14      |       3
+  8   |      81      |      62
+  9   |      46      |      85
+ 10   |      86      |      43
+ 11   |      68      |      48
+ 12   |      47      |      22
+ 13   |      71      |       2 
+ 14   |       2      |       9 
+
+   As you can see from the chart, the only case where the two equations 
+   equal to one another is with the value of 2, which is attained by 
+   setting a as 14 and b as 13.
+3. If the intigers for a and b were much much larger, I would have not been 
+   able to persorm the calculations by hand in a timely matter, and it would 
+   have taken me a far longer time to compute (82**a) % 97 = (53**b) % 97.
+
+
+RSA
+1. What is the encrypted message sent from Alice to Bob?
+2. Show the process to your answer.
+3. Show exactly where in the process you would have failed if the integers 
+   were much larger.
+4. Explain, briefly, why the message encoding Alice used would be insecure 
+   even if Bob's keys involved larger integers.
+
+Bob's public key:
+(e_B, n_B) = (13, 162991)
+
+Message sent from Alice to Bob:
+[17645, 100861, 96754, 160977, 120780, 90338, 130962, 74096, 128123, 
+25052, 119569, 39404, 6697, 82550, 126667, 151824, 80067, 75272, 72641, 
+43884, 5579, 29857, 33449, 46274, 59283, 109287, 22623, 84902, 6161, 
+109039, 75094, 56614, 13649, 120780, 133707, 66992, 128221]
+
+
+$ openssl enc -d -aes -128 -cbc -k <key> -iv <iv> -base64 -in <encrypted>.base64 -out <decrypted>.txt
+
+1. 
+2. 
+3. 
+4. If there were another person, such as Eve, were to act as a relay 
+   between Bob and Alice (using the man in the middle method), Eve could not only 
+   be able to read the messages that Alice and Bob are sending to each other, but 
+   they can also alter them.
