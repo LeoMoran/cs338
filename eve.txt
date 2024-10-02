@@ -67,10 +67,107 @@ Message sent from Alice to Bob:
 
 $ openssl enc -d -aes -128 -cbc -k <key> -iv <iv> -base64 -in <encrypted>.base64 -out <decrypted>.txt
 
-1. 
-2. 
-3. 
-4. If there were another person, such as Eve, were to act as a relay 
-   between Bob and Alice (using the man in the middle method), Eve could not only 
-   be able to read the messages that Alice and Bob are sending to each other, but 
-   they can also alter them.
+1. 'Dear Bob, check this out. https://www.surveillancewatch.io/ See ya, Alice.'
+2. I order to decode the given message, I needed d, 
+
+>>> for x in range(1000):
+...     if x != 0:                     
+...             if (162991 % x) == 0:          
+...                     print(x) 
+1
+389
+419
+
+P = 389
+Q = 419
+
+>>> math.lcm(388, 418)
+81092
+
+λ(n_B) = 81092
+
+>>> for x in range(100000):
+...     if (13 * x) % 81092 == 1:
+...             print(x) 
+...
+43665
+
+d_b = 43665
+
+>>> (17645 ** 43665) % 162991
+17509
+
+
+>>> hex(17509)
+'0x4465'
+
+0x44 = D, 0x65 = e
+
+
+>>> msg = [17645, 100861, 96754, 160977, 120780, 90338, 130962, 74096, 128123, 
+... 25052, 119569, 39404, 6697, 82550, 126667, 151824, 80067, 75272, 72641, 
+... 43884, 5579, 29857, 33449, 46274, 59283, 109287, 22623, 84902, 6161, 
+... 109039, 75094, 56614, 13649, 120780, 133707, 66992, 128221]
+>>> for x in msg:
+...     print(hex((x ** 43665) % 162991))
+...
+0x4465
+0x6172
+0x2042
+0x6f62
+0x2c20
+0x6368
+0x6563
+0x6b20
+0x7468
+0x6973
+0x206f
+0x7574
+0x2e20
+0x6874
+0x7470
+0x733a
+0x2f2f
+0x7777
+0x772e
+0x7375
+0x7276
+0x6569
+0x6c6c
+0x616e
+0x6365
+0x7761
+0x7463
+0x682e
+0x696f
+0x2f20
+0x5365
+0x6520
+0x7961
+0x2c20
+0x416c
+0x6963
+0x652e
+
+
+0x4465, 0x6172, 0x2042, 0x6f62, 0x2c20, 0x6368, 0x6563, 0x6b20, 0x7468, 0x6973, 0x206f, 
+0x7574, 0x2e20, 0x6874, 0x7470, 0x733a, 0x2f2f, 0x7777, 0x772e, 0x7375, 0x7276, 0x6569, 
+0x6c6c, 0x616e, 0x6365, 0x7761, 0x7463, 0x682e, 0x696f, 0x2f20, 0x5365, 0x6520, 0x7961, 
+0x2c20, 0x416c, 0x6963, 0x652e
+
+>>> bytearray.fromhex("4465617220426f622c20636865636b2074686973206f75742e2068747470733a2f2f7777772e7375727665696c6c616e636577617463682e696f2f205365652079612c20416c6963652e").decode() 
+'Dear Bob, check this out. https://www.surveillancewatch.io/ See ya, Alice.'
+
+I got the command from a stack overflow comment from user4369081, here is the link:
+https://stackoverflow.com/questions/9641440/convert-from-ascii-string-encoded-in-hex-to-plain-ascii
+
+
+3. If n_b were to be a much higher number, then even if I were to make a for loop 
+   that will eventually reach it, it would take a very long time. Then if the number 
+   for d_B was even higher than it already was, it would only add on for just how long 
+   it would take for the computer to finally find the value for d as the function to do
+   so has to take in account every single number leading up to it.
+4. Alice message could remain insecure if the public key does not actually belong to 
+   Bob, but instead it belongs to Eve and only appears to belong to Bob. Then no 
+   matter what key is being used, it will always be read by Eve instead of Bob, and 
+   Alice may be none the wiser.
