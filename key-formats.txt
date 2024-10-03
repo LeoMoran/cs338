@@ -1,0 +1,159 @@
+Leo Moran
+10/02/2024
+
+Questions 
+1. Create an RSA public/private key pair that you will use throughout the rest of this 
+   assignment.
+
+ssh-keygen -t rsa -m pem
+
+   When you are asked to pick a file name, use "id_rsa_homework" so you can remember 
+   to delete these files when you're done with the assignment. (You're going to be 
+   posting your observations in a public GitHub repo, so you're not going to ever 
+   actually use this key pair for anything.)
+   Copy the contents of id_rsa_homework and id_rsa_homework.pub into your 
+   key-formats.txt file.
+
+2. Put a heading in your report: "Private Key"
+
+3. For your private key file (id_rsa_homework), list the items you expect to be 
+   contained in the file. (Hint: the Appendix of RFC 8017 should help.)
+
+4. Use one or more of the following tools (findable by searching the internet for 
+   "web asn.1 decoder") to decode your private key file.
+
+   * Lapo Luchini's ASN.1 decoder
+   * OSS Nokalva's ASN.1 Playground
+   * Michael Holtstrom's ASN.1 decoder
+   
+   Explain briefly the steps you took to decode the private key file.
+5. For each integer in your decoded private key file, tell me:
+
+   * What is the meaning/name of the integer? This should correspond to one of the 
+   items in your answer to the previous question, articulated as an ASN.1 name from 
+   the specification in RFC 8017.
+   * What is the value of the integer? Write the integer in either decimal or 
+   hexadecimal, whichever is more convenient. If hexadecimal, prepend the integer 
+   with "0x".
+
+6. Next, we're moving on to the public key file id_rsa_homework.pub, so put a heading 
+   in your report: "Public Key"
+
+7.Do the same things you did for the private key: write down what you expect to find 
+   in id_rsa_homework.pub and why; explain how you decoded the file; for each integer in 
+   the file, provide its name, value, and any other relevant details. Unlike with the 
+   private key, I'm not telling you exactly where to look in the specifications to figure 
+   out this key's file format. (Though you might find this blog post by Leonardo Giordano 
+   handy. Aren't I nice?) 
+
+8. Put one last heading in your report: "Sanity check"
+
+9. Demonstrate that the integers you found in these two files work as you expect from 
+   an RSA key pair. For example, does e*d mod lambda(n) = 1? There are various 
+   relationships that you would expect these numbers to have, so show me that they do in 
+   fact have those relationships.
+
+
+Answers
+
+Private Key 
+
+1. Here are the contents of id_rsa_homework file:
+-----BEGIN RSA PRIVATE KEY-----
+MIIG5AIBAAKCAYEAp6/0KIGmtITkd8gYsXxOTXe3CfvH+AreUxHHvimvuFRYBJkp
+OrGrAQvfWLqDLwkT0n/+tumsYRd0hcH4obLHttkVxs/ub11S6/9MVcKSlTxNcvu0
+3cqCbwvMaCIxk/WvkqCqfqUCIGc0bOoTtkH9sYbZnqHoinggzPqqz1FEKvlYrx5E
+GvMlv8DULKtpvbClYdGFIKk3Ln70vxIzUgzWXOrJlM0V+1adLaWwJhWVrcO/nloF
+0YdXQ+a3DZFwoszMMed2bGptNHpnOTAyzbIxOcdeew8MbciEouWcWZ5b4N+WVo2J
+7hkhfooapAE3qAkF8sqPwb8SLwy3ud1WvP5pZ8OCHSq0IRg2zJdoWGaGycUx+t3g
+kzB6L+FXLnWNfi26c+Ksje7Q1TaZsSai0dvI9Uq/Mrenmz7ornnKgqnkK97QHeBI
+aTzbzqNMSAHb8FQAS8D4yxPhcnLsdKjbXsy5y9eq7Juj5krq8BGTUZW2iVNLWG0j
+Vzgw3AZFYA+xzZDrAgMBAAECggGAGMiCl3ICB3AUrDdgnuq2T/C/lrQlq90/Wpuo
+H8zdcarVj2hrlYcotPDiQ6TdOphm25ebN8F1fqwOxq4SZyObLMUM2ONmZAMw/Dwx
+NgOZ0oClGbdl1dnWST8/KKzVEv8ewdcJG8qbc9qM/wPhgfBi5Ff/1dgsHDsA7gqm
+MBncr1VG7CrW+fyxuZNwSGHVMPnol3p16IvZ4f9VgN/Zweivze/NdzaQZyM3+8Uf
+MaHDC3mA2pCHh54vIZP5vgGe2hDWZ7fjlhUMIASKsg2Elc+n9+JvmYunrzCy/yJ/
+P32aK2Y9eyDHmzGU50atltlP9vC7m6HDWgnJKaxU9+H8MovJTRNl3aAxwzK0ox8S
+JyKACfTmtqaNckd/e1qhATleYSI3isk1GIC7xnxmXgHaqN6LZIIMMSOocqZm/oU7
+A6PQtlHzQxY2ihKOOM+1rsj1ATKfkoPeU1W8Kc1fps2flovDTO5vlZjssTFLwKIB
+pIOi7QGH/IjGryyy+oIHvLplD0EBAoHBANvNCyCE/vo93p8fZkCa60SasYkqFHte
+hVCSx0ClnD+OFoZEp/poSPOT1Vk4SBNZk6qK6/Cx1Yd98rlkjJhUcfaz5acDeFea
+dEMmyvrb17lYASoVYVjptsFEbJzzX6LJDa6Ujj1xDyoCmojPOTxkeyKN45Yx4LKS
+FNxPkxf9pzxF/9CjNlUN7l96NUnyb6JKVEDu3opwSSc9Z+P5+7TzkQ1/km8abMb8
+3hDIKs717A3Oxr+T2NEywrZgYCBSB7rRqwKBwQDDTcOtxpubHGBBC0jlJiH46rhc
+9IeY9xNBDUJA27zNVvkyR6W+zLNOjecOPJJUVibXdmBs9UJ7wBIeXYMIYmYAZfWO
+XIhKkAA6lK8seHgT8Xsl9bCGGvLuNq0LIQiGU3pDWyADeqFkXclIXl9PV5TJPN2k
+Pnrja2V6aWVvP+tDktoAIUa4Oy7kMaPZyBFhw6pSFysHtRrRHXsmxW856IugOJPd
+OGtzTKakq+5+/vQQ8LIbjQj6il5c6afAxKW/fcECgcAzXFxnQuyZ6O8mW533Jrwn
+Eca+eHjEwzd/tmyc7JXwO/GDenOODeROFpNZ/87Hxry8sy2i1stAl+up6pb32XOv
+5CWbuzHZtpvIPT5dFBX6l1feT5SpxCMSUjzXB/+m+DgcPVZngQ28EVOu+E01kX08
+e89cf1c0IvKA8I88oeb8LJc0V48QnOrAoLvnBaGUWK4LZkXWL5rIco7eNMHebLPO
+ZasADzqv3NK/NSbbqZd5OoIyrgeSCrx5BVgw9TodK3UCgcEAhWxG1hzsiRblmwn+
+jq1yX/7aXIahbBq/CJ3qOSzk2tMkAvl3fdWSWYQP6WXwAbWpa2DvlwAmnywkNKJl
+tgCi9nqxOsR0R5wAzARvd84FGnrKSrCCG9ulQqAPr56tmDbHO+SxBi9suohnzgzK
+yAVpG+F8+YvFoD/qX6pJJathKhTU4WnaSloEOti+uzU2yrdFUDeLqgRLgbjGPUJ8
+Le90E80TFvpITch7v9vFXvUF/9yvkKrVC3Qj6w2lEMhHA38BAoHBAKOPcjocb1tc
+AEABDeMG+Lu2W3oRZU9sJNtycm3UK8Ts9oHgITFxQC6fvwhtjxa7cKKJzj8F1LGS
+wDXp6DmrA+Fkft2OJkYnPJiRSkhBX3JUqRdtVktjIvKb/xMSwfEiFQ0KZV/Y7Nb1
+xsP6M1GSuwkAuTOv3Pn8HID/I+gDhzKj8xvSRek92qiZc16gPbI8o/nAXJ1RPVqK
+MzRoRIZhAv4WA0w/ceLVQ+xpLp8rTbNWMq+tZPoQZSzOmi90RdZ6Zw==
+-----END RSA PRIVATE KEY-----
+
+   And here are the contents of id_rsa_homework.pub file:
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnr/Qogaa0hOR3yBixfE5Nd7cJ+8f4Ct5TEce+Ka+4VFgEmSk6sasBC99YuoMvCRPSf/626axhF3SFwfihsse22RXGz+5vXVLr/0xVwpKVPE1y+7TdyoJvC8xoIjGT9a+SoKp+pQIgZzRs6hO2Qf2xhtmeoeiKeCDM+qrPUUQq+VivHkQa8yW/wNQsq2m9sKVh0YUgqTcufvS/EjNSDNZc6smUzRX7Vp0tpbAmFZWtw7+eWgXRh1dD5rcNkXCizMwx53Zsam00emc5MDLNsjE5x157DwxtyISi5ZxZnlvg35ZWjYnuGSF+ihqkATeoCQXyyo/BvxIvDLe53Va8/mlnw4IdKrQhGDbMl2hYZobJxTH63eCTMHov4VcudY1+Lbpz4qyN7tDVNpmxJqLR28j1Sr8yt6ebPuiuecqCqeQr3tAd4EhpPNvOo0xIAdvwVABLwPjLE+Fycux0qNtezLnL16rsm6PmSurwEZNRlbaJU0tYbSNXODDcBkVgD7HNkOs= leo17@Tranquility
+
+
+2. Completed this step, the heading should be above the first answer.
+
+3. The private key should contain the version,  modulus (n), public exponent (e), 
+   private, exponent (d), two prime numbers (p & q) that can make up the modulus 
+   (p * q = n), two exponents making use of the prime numbers 
+   (d mod (p-1) & d mod (q-1)), and finaly a coefficent ((inverse of q) mod p).
+
+4. I made use of Lapo Luchini's ASN.1 decoder and entered the file to decode the 
+   private key. Here is the link:
+https://lapo.it/asn1js/
+
+5. The decoder had the Version number which determined if there were two-primes 
+   used or multiple, it was set as 0 so there were only two primes found. Then 
+   there was modulus which is the RSA modulus n, which you can get by multiplying
+   two prime numbers together, this integer was 
+   380545802970517232807595088579370964252494330843422. Next would be the public 
+   exponent, which is the RSA's e integer, which is 65537, and it's used as a part 
+   of a public key to encrypt messages between the user and the one who released 
+   the key. The private exponent follows being 
+   5624252937382592912361514912156166989257457, the private exponent acts as the 
+   RSA's d which is not shared and is used to decypher messages sent to the owner by a 
+   sender who used the public key. After the private exponents are the two prime 
+   numbers of RSA's p and q, these are used to calculate n, p is 
+   2069488139565262167484325123901075452899494637594578, while q is
+   1838840221864999787083671614318543199197224488363853. Next are the two exponents, 
+   the first being 4835763213040332153265324160004435583823315208221, while the second 
+   is 1256214877295875161623360018253350261904849700062, they make up for RSA's 
+   d mod (p - 1) and d mod (q - 1) respectively. Finally we got the coefficient 
+   which is RSA's (inverse of q) mod p, the integer was 
+   15399668442855581748071160211797061879727237309.
+
+Public Key
+
+6. Placed header on the line above
+
+7. Within the public key, I only expect to see the modulus (n) and the public 
+   exponent (e). I made use of the provided decoder given by professor
+
+Sanity Check
+8. Placed header on line above
+
+9. Now to check if all the integers do infact work through the use of python3 within 
+   my terminal, starting with the given example for question 9. 
+   (e * d) mod lambda(n) = 1
+
+n = 380545802970517232807595088579370964252494330843422
+e = 65537
+d = 5624252937382592912361514912156166989257457
+p = 2069488139565262167484325123901075452899494637594578
+q = 1838840221864999787083671614318543199197224488363853
+expo1 = 4835763213040332153265324160004435583823315208221
+expo2 = 1256214877295875161623360018253350261904849700062
+coe = 15399668442855581748071160211797061879727237309
+
