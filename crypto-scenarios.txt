@@ -1,0 +1,122 @@
+Leo Moran
+10/04/2024
+
+
+Questions
+
+SIMPLE COMMUNICATION SCENARIO
+1. Alice wants to send Bob a long message, and she doesn't want Eve to be able to read it. 
+   Assume for this scenario that AITM is impossible.
+
+2. Alice wants to send Bob a long message. She doesn't want Mal to be able to modify the 
+   message without Bob detecting the change.
+
+3. Alice wants to send Bob a long message (in this case, it's a signed contract between 
+   AliceCom and BobCom), she doesn't want Eve to be able to read it, and she wants Bob to 
+   have confidence that it was Alice who sent the message. Assume for this scenario that 
+   AITM is impossible.
+
+QUESTIONS ABOUT BREAKING SECURITY
+4. Consider a scenario where Alice and Bob have been in contract negotiations and sharing 
+   documents electronically along the way. Suppose Bob sues Alice for breach of contract 
+   and presents as evidence the digitally signed contract (C || Sig) and Alice's public key 
+   P_A. Here, C contains some indication that Alice has agreed to the contract—e.g., if C 
+   is a PDF file containing an image of Alice's handwritten signature. Sig, on the other 
+   hand is a digital signature, as described at 9:23 or so of the Cryptographic Hash 
+   Functions video.
+   (https://carleton.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=35b32c43-7928-4368-8e14-ad090112827a)
+
+5. or this scenario, suppose the assumption that everybody has everybody else's correct 
+   public keys is no longer true. Instead, suppose we now have a certificate authority CA, 
+   and that everybody has the correct P_CA (i.e. the certificate authority's key). Suppose 
+   further that Bob sent his public key P_B to CA, and that CA then delivered to Bob this 
+   certificate:
+Cert_B = "bob.com" || P_B || Sig_CA
+   In terms of P_CA, S_CA, H, E, etc., of what would Sig_CA consist? That is, show the 
+   formula CA would use to compute Sig_CA.
+
+6. Bob now has the certificate Cert_B from the previous question. During a communication, 
+   Bob sends Alice Cert_B. Is that enough for Alice to believe she's talking to Bob? 
+   (Hint: no.) What could Alice and Bob do to convince Alice that Bob has the S_B that goes 
+   with the P_B in Cert_B?
+
+7. Finally, list at least two ways the certificate-based trust system from the previous two 
+   questions could be subverted, allowing Mal to convince Alice that Mal is Bob.
+
+Answers
+1. Alice and Bob can make use of AES(K, M) to send their encrypted messages, but in 
+   order to get their keys, they can use Diffie-Hellman to agree on a shared secret to form 
+   the key k. By using Diffie-Hellman, Alice and Bob are able to share a secret without Eve 
+   being able to understand, using this key to then later encrypt their messages further 
+   prevents Eve from being able to understand what they are sending to each other.
+
+2. Alice and Bob can make use of public and secret key pair and Alice sends Bob E(P_B, k_1), 
+   then Bob will send E(P_A, K_2). Using what they sent each other, they can both form a 
+   concatenation of the two keys to make the final key (H(k_1 || k_2) = K) before continuing 
+   with AES to encrypt their messages. By using the public keys of each other to encrypt 
+   their own half of the key, it makes it difficult for someone like Mal to perform an 
+   Adversary-In-The-Middle (AITM) attack as they would not have the secret key to decrypt the 
+   half-keys made using Alice and Bob's public key. 
+   
+
+3. Alice and Bob can make use of digital signatures since Eve can only watch from the 
+   sidelines and not act like either Alice or Bob with a fake public key. Alice can have both 
+   a secret and public key (S_A, P_A) where Bob is aware of the public key, Alice can then 
+   form a document (D) using the hash of their message (D = H(M)), then Alice can form a 
+   personal signature (Sig), encrypting the document with their secret password 
+   (Sig = E(S_A, D)). FInally, before sending the message to Bob, Alice would concatenate 
+   the original message with their signature (M || Sig). Then Bob can make use of a key that 
+   Alice and Bob would have shared to split the message and signature. Then using P_A to 
+   decrypt Sig in order to get the original copy of the document (E(P_A, Sig) = D^1), which 
+   should match with the original message after being put through a hash function 
+   (D^1 = H(M)).
+
+4. The three claims Alice can make are "Someone else had sent a modified contract to Bob," 
+   "Bob themself had modified the contract," "Bob is not using the right public key." The 
+   first claim is the weakest since if a person such as Mal were to modify the document, 
+   they would need to perform an AITM attack in order to gain access to the messages Alice 
+   and Bob are sending each other, but since Mal has neither Alice's or Bob's secret keys, 
+   Mal will not be able to decrypt the first few messages needed to form the keys of the 
+   encryption, preventing them from modifying the document. The second claim has more ground 
+   since Bob doesn't have to worry about the keys since they already formed the shared key 
+   with Alice. However, in order for Bob to modify or fabricate a document Alice sent, Bob 
+   would also need the signature to replicate the changes within its document. But without 
+   Alice's secret key, Bob would not be able to form a new signature and be forced 
+   to use an old one, which will be debunked once anyone tries to compare the hash of the 
+   document with the decrypted signature. The third option seems the most plausable since 
+   Bob cannot be sure if they got the right public key, and therefore unable to determine if 
+   the document is correct. This outcome doesn't really solve where the document came from, 
+   unless Bob had made it or some very particular data corruption occured during the sending, 
+   of the file, and it would also require that the fake public key had managed to somehow 
+   provide a false positive with the hashed message. Following this logic the public key 
+   and document can very well be false, however the digital signature cannot be so easily 
+   faked as it would require Alice's secret key to create, then through the use of Alice's 
+   actual public key this claim can also be debunked. While this claim is possible, it does 
+   not appear likely without some form of tampering with both the keys and the document, 
+   furthermore why would Bob attempt to pass such tampering if they could not have access to
+   a new signature as well? 
+   Another claim that Alice can make is that "I never once spoke with Bob," this would mean 
+   that Bob was never talking with Alice in the first place, but instead with an imposter 
+   who provided a false public key. This would mean that the negotiations were all a trick 
+   and that the signed document was also part of the lie. This can be very possible and Bob 
+   could also have been aware of the imposter and worked with them to form this court case. 
+   But since this scenario has Alice and Bob in negotiations, this claim would not hold as 
+   Alice's computer would have the messages and keys saved, proving that they are the one 
+   who talked with Bob.
+
+5. The signature of the certificate authority CA would consist of the encryption of Bob's 
+   data through the use of CA's secret key (Sig_CA = E(S_CA, H(data))), and Bob's data 
+   would consist of Bob's identity ("bob.com"), and their public key (P(B)). The data can 
+   also include orther types of information such as the date of it's creation, an expiration 
+   date, or anything else that would be relevant to have.
+
+6. Alice would need to validate the certificate from Bob through the use of by splitting the 
+   data from the certificate from the signature, through and already agreed upon method, 
+   then they would need to decrypt the message using the CA's public key (P_CA) which will 
+   equal to Bob's data when hashed since using a public key to encrypt a message that was 
+   already encrypted by the public key negates the encryptions and returns the original 
+   message albeit still hashed (E(P_CA, Sig.) = E(P_CA, E(S_CA, H(data))) = H(data)).
+
+7. Mal could be the one to forge their own certificate using Bob's identity and public key. 
+   Mal could also try to perform an AITM attack between Bob and CA to take a copy of the 
+   certification and use it for personal means.
