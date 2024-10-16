@@ -1,0 +1,134 @@
+Leo Moran
+10/15/2024
+
+Assignment Prompts
+
+The goal of this assignment is to get you to think seriously about the ethics of a 
+tricky situation. To give some structure to your analysis, I'd like you to organize 
+your report around the following questions.
+
+A. Identify the main ethical question or questions faced by the main character 
+   ("you") in the scenario. This will certainly include "what should you do?", but 
+   there may be other interesting questions to consider.
+
+B. For each stakeholder (or category of stakeholders) in the scenario, identify the 
+   stakeholder's relevant rights.
+
+C. List any information missing from the scenario that you would like to have to 
+   help you make better choices.
+
+D. Describe your possible actions, and discuss the likely consequences of those 
+   actions.
+
+E. Discuss whether the ACM Code of Ethics and Professional Conduct offers any 
+   relevant guidance.
+
+F. Describe and justify your recommended action, as well as your answers to any 
+   other questions you presented in part A.
+
+Keep your write-up concise but detailed. At a rough guess, I'd expect your write-up 
+to take 2-3 pages.
+
+
+Scenario #1: responsible reporting of security vulnerabilities
+You have discovered a bug in the InstaToonz music-sharing app. This bug is a nasty 
+one that would allow an attacker to read the contents of all the private InstaToonz 
+direct messages for anyone who has ever posted a public InstaToonz message. This bug 
+threatens the privacy of hundreds of millions of InstaToonz users.
+
+You want to report this bug (Coordinated Vulnerability Disclosure) to InstaToonz, 
+Inc. to protect their customers, but you know that the last time somebody reported a 
+security bug to them privately, InstaToonz sued the bug-reporter in North Carolina 
+and also called in the FBI, causing the person significant hassle and expense. The 
+case was briefly a cause célèbre in the tech world, with calls for boycotts and state 
+and Congressional action. Eventually, after a fair amount of sabre-rattling, 
+InstaToonz dropped the suit. But at the same time, they released a statement 
+articulating their belief that all security researchers (which InstaToonz always put 
+inside scare quotes) are engaging in attempted thievery of trade secrets. After a 
+brief investigation upon being first contacted by InstaToonz, the FBI declined to 
+pursue the matter further. InstaToonz has refused all demands that they establish a 
+bug bounty program (A deal offered by the owner of a website/software where people 
+can gain recognition and compensation for reporting bugs within their system).
+
+This scenario has an interesting legal twist if it occurs in the US. If you choose 
+to analyze this scenario, take into account in your analysis two possible options:
+
+
+* Suppose the bug involves the encryption and copy-protection of the music shared by 
+   InstaToonz users. You are not a lawyer, but you're concerned that your uncovering of 
+   this bug may put you in violation of Section 1201 of the Digital Millennium 
+   Copyright Act.
+
+* Suppose the bug does not involve encryption or copy-protection.
+
+Answers
+
+Scenario #1
+A. The main dilemma regarding this scenario is that I, an ethical hacker, have 
+   spotted a bug within InstaToonz’s app that can lead to a breach in privacy for all 
+   app users who have made a public post, but to report such a bug would mean to risk 
+   facing legal issues. Due to InstaToonz’s poor history regarding people privately 
+   reporting bug reports to them and their negative views on white hat hackers, it is 
+   likely that they will attempt to sue me. Following the case where the bug does not 
+   involve encryption or copy-protection, then the company will drop the suit, but I 
+   would have still suffered the cost both economically and physically. But if 
+   encryption is involved and we are located within the united states, then the suit 
+   will hold some ground and can be followed through. It would be the right thing to 
+   report this bug regardless of the consequences to ensure the security of the users, 
+   but it’s important to recognize that doing so may prevent me from helping others in 
+   the future. Furthermore, it is possible that the organization is already aware of 
+   the bug and is in the process of dealing with it in a private manner.
+
+B. For the user’s, they should have the right to deliver messages privately, but 
+   there isn’t much beside that as the organization is not required to notify their 
+   user of such a bug until after it has been dealt with. For the organization, under 
+   the pretext of there being no encryption or copy-protection, they do not have the 
+   right to fully sue me for stealing trade secrets as a public announcement is not 
+   legally binding. In the case of there being encryption or copy-protection, the 
+   organization has the right to sue me on the grounds of Section 1201(a)(3) where I 
+   would be attempting to “circumvent a technological measure” by decrypting their 
+   encryptions using the bug.
+
+C. What rights do I have as an ethical hacker that will permit me to report such a 
+   bug without any concerns of repercussions? Is the organization responsible for 
+   InstaToonz aware of such a bug? If the organization is currently working on the bug 
+   but has not shut down their services while doing such works, would that be legally 
+   viable as they are risking the privacy of their user by not bringing it down until 
+   the issue is resolved? Does InstaToonz have a security team, and if so, do they have 
+   someone I can direct towards the bug as a part of their job while protecting my own 
+   well being? Is there any authorities that I can present this bug to that can handle 
+   the situation? Finally, if I were to point out the smaller parts of the bug and not 
+   make the correlation to how it affects encryptions, will they still be able to sue 
+   me as a part of the Anti-Circumvention Clauses?
+
+D. I can report the bug regardless, and the organization can sue me, which will then 
+   lead to legal action and require me to lose money either by not being able to work 
+   or by having to afford a lawyer. Then if encryption was involved and the lawsuit 
+   lands, I will be suffering a greater cost to myself, as well as the possiblility of 
+   jail time, preventing me from being able to help anyone else during my sentence. The 
+   other option, is that I do nothing and move one with my life, reporting bugs to 
+   other organizations. This corse of action however can lead to black hat hackers 
+   secretly viewing and recording the private messages of the app’s users and selling 
+   off the data. It could take months before the organization can become aware of such 
+   a bug existing, patches it, and never be aware of the date being used of their 
+   users. The alternative course of action would be that some online troll decides to 
+   publish all of the private messages on a public site and exposing all of the 
+   affected users, and the organization rushes to put a stop to it as they will most 
+   undoubtedly lose an immense amount of their userbase. Either outcome for doing 
+   nothing will end up harming both the organization and it’s users, but to report such 
+   a bug will instead harm only myself.
+
+E. Following the ACM Code of Ethics, it reminds me of the added importance of 
+   avoiding negative consequences, especially when it comes to system risks and to 
+   resist against rules that you believe causes harm. The code has also provided me a 
+   means of reporting the issue while protecting myself through the act of whistle 
+   blowing, however that does require me to provide evidence of the supervisors for the 
+   organization’s mismanagement of the bug.
+
+F. I would undergo with reporting the issue through whistle blowing, claiming how 
+   InstaToonz’s negative behavior toward the private reportings of bugs to be a form of 
+   mismanagement that endangers the privacy of their users. Then, regardless of whether 
+   they are in the process of handling the bug or not, the organization must take full 
+   responsibility for their irresponsible actions, and the privacy of the users shall 
+   remain secure.
+
